@@ -50,11 +50,10 @@ class DataTransformation:
                 ("one_hot_encoder",OneHotEncoder()),
                 ("scaler",StandardScaler(with_mean = False))
                 ]
-
             )
 
             logging.info(f"Numerical columns: {numerical_columns}")
-
+            
             logging.info(f"Categorical columns: {categorical_columns}")
 
             preprocessor=ColumnTransformer(
@@ -94,7 +93,7 @@ class DataTransformation:
             logging.info(f"Applying preprocessing object on training and testing Dataframe")
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr=preprocessing_obj.fit_transform(input_feature_test_df)
+            input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
 
             train_arr = np.c_[
                 input_feature_train_arr, np.array(target_feature_train_df)
@@ -102,6 +101,7 @@ class DataTransformation:
             test_arr = np.c_[
                 input_feature_test_arr, np.array(target_feature_test_df)
             ]
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             logging.info(f"Saved Preprocessing Object")
 
